@@ -33,7 +33,9 @@ File me [[https://github.com/dennyzhang/cheatsheet.dennyzhang.com/issues][Issues
 | List pods with nodes info            | =kubectl get pod -o wide=                                                                 |
 | List everything                      | =kubectl get all --all-namespaces=                                                        |
 | Get all services                     | =kubectl get service --all-namespaces=                                                    |
+| Get all deployments                  | =kubectl get deployments --all-namespaces=                                                |
 | Show nodes with labels               | =kubectl get nodes --show-labels=                                                         |
+| Get resources with json output       | =kubectl get pods --all-namespaces -o json=                                               |
 | Validate yaml file with dry run      | =kubectl create --dry-run --validate -f pod-dummy.yaml=                                   |
 | Start a temporary pod for testing    | =kubectl run --rm -i -t --image=alpine test-$RANDOM -- sh=                                |
 | kubectl run shell command            | =kubectl exec -it mytest -- ls -l /etc/hosts=                                             |
@@ -72,7 +74,7 @@ File me [[https://github.com/dennyzhang/cheatsheet.dennyzhang.com/issues][Issues
 | Delete all resources filtered by labels | =kubectl delete pods,services -l name=myLabel=           |
 | Delete resources under a namespace      | =kubectl -n my-ns delete po,svc --all=                   |
 | Delete persist volumes by labels        | =kubectl delete pvc -l app=wordpress=                    |
-| Delete statefulset only (not pods)      | =kubectl delete sts/<stateful_set_name> --cascade=false= |
+| Delete state fulset only (not pods)     | =kubectl delete sts/<stateful_set_name> --cascade=false= |
 #+BEGIN_HTML
 <a href="https://cheatsheet.dennyzhang.com"><img align="right" width="185" height="37" src="https://raw.githubusercontent.com/dennyzhang/cheatsheet.dennyzhang.com/master/images/cheatsheet_dns.png"></a>
 #+END_HTML
@@ -89,7 +91,7 @@ File me [[https://github.com/dennyzhang/cheatsheet.dennyzhang.com/issues][Issues
 | Etcd working dir          | =/var/lib/etcd/=                                                          |
 | Network cni               | =/etc/cni/net.d/=                                                         |
 | Log files                 | =/var/log/pods/=                                                          |
-| log in worker node        | =/var/log/kubelet.log=, =/var/log/kube-proxy.log=                               |
+| log in worker node        | =/var/log/kubelet.log=, =/var/log/kube-proxy.log=                         |
 | log in master node        | =kube-apiserver.log=, =kube-scheduler.log=, =kube-controller-manager.log= |
 | Env                       | =/etc/systemd/system/kubelet.service.d/10-kubeadm.conf=                   |
 | Env                       | export KUBECONFIG=/etc/kubernetes/admin.conf                              |
@@ -102,6 +104,7 @@ File me [[https://github.com/dennyzhang/cheatsheet.dennyzhang.com/issues][Issues
 | List pods with more info     | =kubectl get pod -o wide=, =kubectl get pod/<pod-name> -o yaml=                           |
 | Get pod info                 | =kubectl describe pod/srv-mysql-server=                                                   |
 | List all pods with labels    | =kubectl get pods --show-labels=                                                          |
+| [[https://github.com/kubernetes/kubernetes/issues/49387][List all unhealthy pods]]      | kubectl get pods --field-selector=status.phase!=Running --all-namespaces                  |
 | List running pods            | kubectl get pods --field-selector=status.phase=Running                                    |
 | Get Pod initContainer status | =kubectl get pod --template '{{.status.initContainerStatuses}}' <pod-name>=               |
 | kubectl run command          | kubectl exec -it -n "$ns" "$podname" -- sh -c "echo $msg >>/dev/err.log"                  |
